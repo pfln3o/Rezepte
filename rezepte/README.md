@@ -32,7 +32,27 @@ rezepte/
 |---|---|---|---|
 | [Semmelknödel](beilagen/semmelknoedel.md) | 4 (ca. 8 Stück) | ca. 1 h | einfach |
 
+### Suppen
+
+| Rezept | Portionen | Gesamtzeit | Schwierigkeit |
+|---|---|---|---|
+| [Grießnockerlsuppe](suppen/griessnockerlsuppe.md) | 4 (ca. 12 Nockerl) | ca. 55 min | einfach |
+
+### Soßen
+
+| Rezept | Portionen | Gesamtzeit | Schwierigkeit |
+|---|---|---|---|
+| [Currywurst-Soße](saucen/currywurst-sosse.md) | ca. 500 ml | ca. 15 min | einfach |
+
+### Mehlspeisen
+
+| Rezept | Portionen | Gesamtzeit | Schwierigkeit |
+|---|---|---|---|
+| [Kaiserschmarrn](mehlspeisen/kaiserschmarrn.md) | 2–3 (Hauptgericht) | ca. 30 min | mittel |
+| [Pfannkuchen](mehlspeisen/pfannkuchen.md) | 4 (ca. 8 Stück) | ca. 1 h | einfach |
+
 ## Menüvorschläge
 
 - **Sonntagsbraten:** Rinderbraten + Semmelknödel (+ Rotkohl)
 - **Deftiger Eintopftag:** Rindergulasch + Semmelknödel oder Spätzle
+- **Österreichisches Sonntagsessen:** Grießnockerlsuppe, dann Rinderbraten + Semmelknödel, zum Nachtisch Kaiserschmarrn

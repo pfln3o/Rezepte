@@ -12,7 +12,7 @@ import re
 
 import yaml
 
-REIHENFOLGE = ["hauptgerichte", "suppen", "salate", "beilagen", "saucen", "desserts", "backen", "getraenke"]
+REIHENFOLGE = ["hauptgerichte", "suppen", "salate", "beilagen", "saucen", "mehlspeisen", "desserts", "backen", "getraenke"]
 NAMEN = {"getraenke": "Getränke", "saucen": "Soßen"}
 BILD_ENDUNGEN = (".jpg", ".jpeg", ".png", ".webp")
 

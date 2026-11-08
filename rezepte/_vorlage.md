@@ -1,6 +1,6 @@
 ---
 titel: Rezeptname
-kategorie: hauptgerichte   # hauptgerichte | beilagen | suppen | desserts | backen | …
+kategorie: hauptgerichte   # hauptgerichte | beilagen | suppen | mehlspeisen | desserts | backen | …
 portionen: 4
 vorbereitung: 0 min
 garzeit: 0 min

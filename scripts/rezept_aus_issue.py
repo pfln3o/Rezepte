@@ -33,7 +33,7 @@ FELDER = {
 }
 KATEGORIEN = {
     "hauptgerichte": "hauptgerichte", "beilagen": "beilagen", "suppen": "suppen",
-    "salate": "salate", "soßen": "saucen", "desserts": "desserts", "backen": "backen",
+    "salate": "salate", "soßen": "saucen", "mehlspeisen": "mehlspeisen", "desserts": "desserts", "backen": "backen",
     "getränke": "getraenke",
 }
 KATEGORIE_TITEL = {v: k.capitalize() for k, v in KATEGORIEN.items()}
