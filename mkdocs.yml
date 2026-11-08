@@ -6,6 +6,7 @@ use_directory_urls: true
 exclude_docs: |
   _vorlage.md
   README.md
+  bilder/quellen.yml
 
 hooks:
   - hooks/rezepte.py

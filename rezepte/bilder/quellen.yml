@@ -1,0 +1,18 @@
+# Bildnachweise für die Rezeptfotos.
+# Schlüssel = Pfad der Rezeptdatei. Das Foto selbst liegt unter bilder/<gleicher Pfad>.jpg
+# Eigene Fotos: einfach die Datei ablegen, hier ist dann kein Eintrag nötig.
+
+hauptgerichte/gulasch.md:
+  urheber: Takeaway, Wikimedia Commons (zugeschnitten)
+  lizenz: CC BY-SA 3.0
+  link: https://commons.wikimedia.org/wiki/File:Bavarian_Gulash_mit_Semmelkn%C3%B6del_Seefeld.JPG
+
+hauptgerichte/rinderbraten.md:
+  urheber: Anagoria, Wikimedia Commons (zugeschnitten; Symbolbild Sauerbraten)
+  lizenz: CC BY 3.0
+  link: https://commons.wikimedia.org/wiki/File:2017-05-23_Sauerbraten_anagoria.jpg
+
+beilagen/semmelknoedel.md:
+  urheber: Xocolatl, Wikimedia Commons (zugeschnitten)
+  lizenz: CC BY-SA 4.0
+  link: https://commons.wikimedia.org/wiki/File:AaaIMG_0528_Kn%C3%B6del.jpg

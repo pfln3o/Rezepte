@@ -78,7 +78,7 @@
 .md-typeset .startseite-kopf h1 { color: inherit; margin: 0 0 .3em; font-size: 2.6rem; }
 .md-typeset .startseite-kopf p { margin: 0; font-size: 1.1rem; max-width: 32em; opacity: .95; }
 .md-typeset .rezept-zaehler { color: var(--md-default-fg-color--light); font-size: .9rem; margin: 0 0 .5rem .2rem; }
-.md-typeset .kategorie-titel { display: flex; align-items: center; gap: .45em; margin: 1.6em 0 .7em; }
+.md-typeset .kategorie-titel { margin: 1.6em 0 .7em; }
 
 .rezept-karten {
   display: grid;
@@ -86,9 +86,9 @@
   gap: 1rem;
 }
 .md-typeset a.rezept-karte {
-  display: flex; flex-direction: column; gap: .35rem;
-  padding: 1.15rem 1.2rem 1.1rem;
+  display: flex; flex-direction: column;
   border-radius: var(--karte-radius);
+  overflow: hidden;
   background: var(--karte-bg);
   border: 1px solid var(--karte-rand);
   box-shadow: var(--schatten);
@@ -101,11 +101,12 @@
   border-color: var(--md-primary-fg-color--light);
   color: var(--md-default-fg-color);
 }
-.rezept-karte__emoji {
-  display: grid; place-items: center;
-  width: 2.8rem; height: 2.8rem; font-size: 1.55rem;
-  border-radius: 14px; background: var(--kachel-bg); margin-bottom: .25rem;
-}
+.rezept-karte__bild { display: block; aspect-ratio: 4 / 3; overflow: hidden; background: var(--kachel-bg); }
+.rezept-karte__bild img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s ease; }
+.md-typeset a.rezept-karte:hover .rezept-karte__bild img { transform: scale(1.04); }
+.rezept-karte__bild--leer { display: grid; place-items: center; background: linear-gradient(135deg, var(--kachel-bg), var(--chip-bg)); }
+.rezept-karte__bild--leer span { font-family: var(--ueberschrift-font); font-size: 3.5rem; color: var(--md-primary-fg-color--light); opacity: .6; }
+.rezept-karte__inhalt { display: flex; flex-direction: column; gap: .35rem; padding: 1rem 1.2rem 1.1rem; flex: 1; }
 .rezept-karte__titel { font-family: var(--ueberschrift-font); font-size: 1.3rem; font-weight: 600; line-height: 1.25; }
 .rezept-karte__text { font-size: .92rem; line-height: 1.5; color: var(--md-default-fg-color--light); flex: 1; }
 .rezept-karte__chips { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .5rem; }
@@ -134,9 +135,20 @@
   padding: .8rem .5rem .7rem;
   border-radius: 14px; background: var(--kachel-bg);
 }
-.info-kachel__icon { font-size: 1.3rem; line-height: 1; margin-bottom: .35rem; }
-.info-kachel__wert { font-weight: 700; font-size: 1rem; line-height: 1.3; }
+.info-kachel__wert { font-weight: 700; font-size: 1.05rem; line-height: 1.3; }
 .info-kachel__name { font-size: .75rem; text-transform: uppercase; letter-spacing: .06em; color: var(--md-default-fg-color--light); margin-top: .15rem; }
+
+/* ---------- Rezeptfoto ---------- */
+.md-typeset .rezept-foto { margin: .4rem 0 1.4rem; width: 100%; max-width: none; display: block; }
+.md-typeset .rezept-foto img {
+  display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover;
+  border-radius: calc(var(--karte-radius) + 4px); box-shadow: var(--schatten);
+}
+.md-typeset .rezept-foto figcaption {
+  font-size: .72rem; text-align: right; margin: .45rem .3rem 0; max-width: none;
+  color: var(--md-default-fg-color--light); font-style: normal;
+}
+.md-typeset .rezept-foto figcaption a { color: inherit; }
 
 /* ---------- Zutaten: zum Abhaken antippen ---------- */
 .zutaten, .schritte {

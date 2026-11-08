@@ -27,7 +27,7 @@
     btn.className = 'wach-schalter'; btn.type = 'button';
     function zeichnen() {
       btn.setAttribute('aria-pressed', an ? 'true' : 'false');
-      btn.textContent = an ? '☀️ Bildschirm bleibt an' : '🌙 Bildschirm wach halten';
+      btn.textContent = an ? 'Bildschirm bleibt an ✓' : 'Bildschirm wach halten';
     }
     async function holen() {
       try { lock = await navigator.wakeLock.request('screen'); lock.addEventListener('release', function () { lock = null; }); }

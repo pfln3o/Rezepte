@@ -14,15 +14,30 @@ import yaml
 
 REIHENFOLGE = ["hauptgerichte", "suppen", "salate", "beilagen", "saucen", "desserts", "backen", "getraenke"]
 NAMEN = {"getraenke": "Getränke", "saucen": "Soßen"}
-EMOJI = {
-    "hauptgerichte": "🍲", "suppen": "🥣", "salate": "🥗", "beilagen": "🥔",
-    "saucen": "🫙", "desserts": "🍰", "backen": "🥨", "getraenke": "🍹",
-}
-INFO_EMOJI = {
-    "portionen": "🍽️", "vorbereitung": "🔪", "ruhezeit": "⏳", "garzeit": "🔥",
-    "backzeit": "🔥", "kochzeit": "🔥", "gesamt": "⏱️", "schwierigkeit": "📊",
-}
-SCHWIERIGKEIT_EMOJI = {"einfach": "●○○", "mittel": "●●○", "anspruchsvoll": "●●●"}
+BILD_ENDUNGEN = (".jpg", ".jpeg", ".png", ".webp")
+
+
+def _bild(docs, src_uri):
+    """Foto zum Rezept: bilder/<kategorie>/<dateiname>.jpg (oder .png/.webp)."""
+    basis = os.path.splitext(src_uri)[0]
+    for endung in BILD_ENDUNGEN:
+        if os.path.exists(os.path.join(docs, "bilder", basis + endung)):
+            return f"bilder/{basis}{endung}"
+    return None
+
+
+_QUELLEN = {}
+
+
+def _quellen(docs):
+    pfad = os.path.join(docs, "bilder", "quellen.yml")
+    if pfad not in _QUELLEN:
+        daten = {}
+        if os.path.exists(pfad):
+            with open(pfad, encoding="utf-8") as f:
+                daten = yaml.safe_load(f) or {}
+        _QUELLEN[pfad] = daten
+    return _QUELLEN[pfad]
 
 FRONTMATTER = re.compile(r"^---\s*\n(.*?)\n---\s*\n", re.S)
 
@@ -81,25 +96,28 @@ def _startseite(markdown, config):
     anzahl = sum(len(r) for r in kategorien.values())
     teile = [f'<p class="rezept-zaehler">{anzahl} Rezepte in {len(kategorien)} Kategorien</p>\n']
     for kat in sorted(kategorien, key=lambda k: (rang.get(k, 99), k)):
-        emoji = EMOJI.get(kat, "🍴")
-        teile.append(f'<h2 id="{kat}" class="kategorie-titel"><span aria-hidden="true">{emoji}</span> {_kategorie(kat)}</h2>\n')
+        teile.append(f'<h2 id="{kat}" class="kategorie-titel">{_kategorie(kat)}</h2>\n')
         karten = []
         for titel, url, meta in kategorien[kat]:
             chips = []
             if not _leer(meta.get("gesamt")):
-                chips.append(f"⏱️ {html.escape(str(meta['gesamt']))}")
+                chips.append(html.escape(str(meta["gesamt"])))
             if not _leer(meta.get("portionen")):
-                chips.append(f"🍽️ {html.escape(str(meta['portionen']))}")
+                chips.append(html.escape(re.sub(r"\s*\(.*\)", "", str(meta["portionen"]))) + " Portionen")
             if not _leer(meta.get("schwierigkeit")):
                 chips.append(html.escape(str(meta["schwierigkeit"])).capitalize())
             chip_html = "".join(f"<span>{c}</span>" for c in chips)
             beschreibung = html.escape(_kurz(meta.get("_beschreibung", "")))
+            bild = _bild(docs, url.rstrip("/") + ".md")
+            if bild:
+                bild_html = f'<span class="rezept-karte__bild"><img src="{bild}" alt="" loading="lazy"></span>'
+            else:
+                bild_html = f'<span class="rezept-karte__bild rezept-karte__bild--leer"><span>{html.escape(titel[:1])}</span></span>'
             karten.append(
-                f'<a class="rezept-karte" href="{url}">'
-                f'<span class="rezept-karte__emoji" aria-hidden="true">{emoji}</span>'
+                f'<a class="rezept-karte" href="{url}">{bild_html}<span class="rezept-karte__inhalt">'
                 f'<span class="rezept-karte__titel">{html.escape(titel)}</span>'
                 f'<span class="rezept-karte__text">{beschreibung}</span>'
-                f'<span class="rezept-karte__chips">{chip_html}</span></a>'
+                f'<span class="rezept-karte__chips">{chip_html}</span></span></a>'
             )
         teile.append('<div class="rezept-karten">' + "".join(karten) + "</div>\n")
 
@@ -108,7 +126,7 @@ def _startseite(markdown, config):
         with open(readme, encoding="utf-8") as f:
             m = re.search(r"^## Menüvorschläge\s*\n(.*?)(?=^## |\Z)", f.read(), re.S | re.M)
         if m and m.group(1).strip():
-            teile.append('<div class="menues" markdown>\n\n## 🍷 Menüvorschläge\n\n' + m.group(1).strip() + "\n\n</div>\n")
+            teile.append('<div class="menues" markdown>\n\n## Menüvorschläge\n\n' + m.group(1).strip() + "\n\n</div>\n")
 
     return markdown.replace("<!-- REZEPTE -->", "\n".join(teile))
 
@@ -133,8 +151,7 @@ def _infokacheln(body, meta):
         paare.append(("Schwierigkeit", str(meta["schwierigkeit"]).capitalize()))
 
     kacheln = "".join(
-        f'<div class="info-kachel"><span class="info-kachel__icon" aria-hidden="true">'
-        f'{INFO_EMOJI.get(k.lower(), "•")}</span><span class="info-kachel__wert">{html.escape(w)}</span>'
+        f'<div class="info-kachel"><span class="info-kachel__wert">{html.escape(w)}</span>'
         f'<span class="info-kachel__name">{html.escape(k)}</span></div>'
         for k, w in paare if w and w != "–"
     )
@@ -163,9 +180,32 @@ def _passt_zu(meta, page):
     return "\n\n## Passt dazu\n\n" + " · ".join(teile) + "\n"
 
 
-def _rezeptseite(markdown, page):
+def _titelbild(md, page, config):
+    docs = config["docs_dir"]
+    bild = _bild(docs, page.file.src_uri)
+    if not bild:
+        return md
+    # Seite liegt bei use_directory_urls eine Ebene tiefer (…/rinderbraten/)
+    tiefe = page.file.src_uri.count("/") + (1 if config.get("use_directory_urls") else 0)
+    src = "../" * tiefe + bild
+    q = _quellen(docs).get(page.file.src_uri) or {}
+    nachweis = ""
+    if q:
+        teile = [html.escape(str(q.get("urheber", "")))] if q.get("urheber") else []
+        if q.get("lizenz"):
+            teile.append(html.escape(str(q["lizenz"])))
+        text = "Foto: " + ", ".join(teile)
+        if q.get("link"):
+            text = f'<a href="{html.escape(str(q["link"]))}" rel="noopener">{text}</a>'
+        nachweis = f'<figcaption>{text}</figcaption>'
+    figur = f'<figure class="rezept-foto"><img src="{src}" alt="{html.escape(str(page.meta.get("titel", "")))}">{nachweis}</figure>'
+    return re.sub(r"^(# .+\n)", lambda m: figur + "\n\n" + m.group(1), md, count=1, flags=re.M)
+
+
+def _rezeptseite(markdown, page, config):
     meta = page.meta or {}
     md = _infokacheln(markdown, meta)
+    md = _titelbild(md, page, config)
     md = _abschnitt_einrahmen(md, "Zutaten", "zutaten")
     md = _abschnitt_einrahmen(md, "Zubereitung", "schritte")
     return md + _passt_zu(meta, page)
@@ -175,7 +215,7 @@ def on_page_markdown(markdown, page, config, files):
     if page.file.src_uri == "index.md":
         return _startseite(markdown, config)
     if "/" in page.file.src_uri and page.meta.get("kategorie"):
-        md = _rezeptseite(markdown, page)
+        md = _rezeptseite(markdown, page, config)
         # Linknamen für „Passt dazu“ durch echte Rezepttitel ersetzen
         def titel(m):
             ziel = posixpath.normpath(posixpath.join(posixpath.dirname(page.file.src_uri), m.group(2)))
