@@ -8,7 +8,7 @@ exclude_docs: |
   README.md
 
 hooks:
-  - hooks/startseite.py
+  - hooks/rezepte.py
 
 theme:
   name: material
@@ -20,15 +20,15 @@ theme:
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: deep orange
-      accent: amber
+      primary: custom
+      accent: custom
       toggle:
         icon: material/weather-night
         name: Dunkles Design
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: deep orange
-      accent: amber
+      primary: custom
+      accent: custom
       toggle:
         icon: material/weather-sunny
         name: Helles Design
@@ -50,6 +50,9 @@ markdown_extensions:
       permalink: false
   - attr_list
   - admonition
+  - md_in_html
 
 extra_css:
   - assets/rezepte.css
+extra_javascript:
+  - assets/kueche.js

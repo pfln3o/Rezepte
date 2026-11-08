@@ -1,31 +1,217 @@
-/* Große, ruhige Schrift für das Lesen am Tablet in der Küche */
-.md-typeset { font-size: 1.05rem; line-height: 1.7; }
-.md-typeset h1 { font-size: 2.1rem; font-weight: 600; }
-.md-typeset h2 { font-size: 1.55rem; margin-top: 1.8em; }
-.md-typeset h3 { font-size: 1.25rem; }
-.md-nav { font-size: 0.85rem; }
-.md-nav__link { padding: 0.25em 0; }
+/* ============================================================
+   Rezeptsammlung – warmer Küchen-Look, groß und gut lesbar
+   ============================================================ */
 
-/* Zutaten und Schritte gut auseinanderhalten */
-.md-typeset ul li, .md-typeset ol li { margin-bottom: 0.55em; }
-.md-typeset ol li::marker { font-weight: 700; color: var(--md-primary-fg-color); }
-
-/* Tabellen über die volle Breite, ohne winzige Schrift */
-.md-typeset table:not([class]) { font-size: 0.95rem; display: table; width: 100%; }
-.md-typeset table:not([class]) th,
-.md-typeset table:not([class]) td { padding: 0.7em 0.9em; }
-
-/* Bildschirm-wach-Schalter */
-.wach-schalter {
-  display: inline-flex; align-items: center; gap: .5em;
-  font-size: .8rem; padding: .45em .9em; margin: 0 0 1em;
-  border: 1px solid var(--md-default-fg-color--lighter); border-radius: 2em;
-  background: transparent; color: var(--md-default-fg-color); cursor: pointer;
+:root {
+  --md-text-font: "Nunito Sans";
+  --ueberschrift-font: "Fraunces", Georgia, "Times New Roman", serif;
+  --karte-radius: 18px;
 }
-.wach-schalter[aria-pressed="true"] {
-  background: var(--md-primary-fg-color); color: var(--md-primary-bg-color);
+
+/* ---------- Farben hell ---------- */
+[data-md-color-scheme="default"] {
+  --md-primary-fg-color: #b5472a;
+  --md-primary-fg-color--light: #d0694a;
+  --md-primary-fg-color--dark: #8f3519;
+  --md-primary-bg-color: #fffaf3;
+  --md-accent-fg-color: #d9822b;
+  --md-default-bg-color: #fbf6ee;
+  --md-default-fg-color: rgba(43, 30, 22, .92);
+  --md-default-fg-color--light: rgba(43, 30, 22, .62);
+  --md-default-fg-color--lighter: rgba(43, 30, 22, .3);
+  --md-default-fg-color--lightest: rgba(43, 30, 22, .08);
+  --md-typeset-a-color: #a63f22;
+  --karte-bg: #ffffff;
+  --karte-rand: #eadfcf;
+  --kachel-bg: #f4ebdd;
+  --box-bg: #fffdf9;
+  --chip-bg: #f6ede0;
+  --chip-fg: #6b4a35;
+  --schatten: 0 1px 2px rgba(80, 50, 30, .06), 0 6px 20px rgba(80, 50, 30, .07);
+  --schatten-hover: 0 2px 4px rgba(80, 50, 30, .08), 0 14px 32px rgba(80, 50, 30, .13);
+}
+
+/* ---------- Farben dunkel ---------- */
+[data-md-color-scheme="slate"] {
+  --md-hue: 25;
+  --md-primary-fg-color: #c45a3b;
+  --md-primary-fg-color--light: #d97858;
+  --md-primary-fg-color--dark: #9d4127;
+  --md-primary-bg-color: #fff6ee;
+  --md-accent-fg-color: #e8a15a;
+  --md-default-bg-color: #1c1714;
+  --md-typeset-a-color: #f0a07e;
+  --karte-bg: #26201c;
+  --karte-rand: #3a302a;
+  --kachel-bg: #2e2621;
+  --box-bg: #231d19;
+  --chip-bg: #352c26;
+  --chip-fg: #e6cdb8;
+  --schatten: 0 1px 2px rgba(0, 0, 0, .3), 0 6px 20px rgba(0, 0, 0, .25);
+  --schatten-hover: 0 2px 4px rgba(0, 0, 0, .35), 0 14px 32px rgba(0, 0, 0, .4);
+}
+
+/* ---------- Grundschrift ---------- */
+.md-typeset { font-size: 1.05rem; line-height: 1.7; }
+.md-typeset h1, .md-typeset h2, .md-typeset h3, .md-header__topic {
+  font-family: var(--ueberschrift-font);
+  letter-spacing: -.01em;
+}
+.md-typeset h1 { font-size: 2.4rem; font-weight: 650; color: var(--md-default-fg-color); margin-bottom: .4em; }
+.md-typeset h2 { font-size: 1.6rem; font-weight: 600; margin-top: 1.6em; }
+.md-typeset h3 { font-size: 1.2rem; font-weight: 600; color: var(--md-primary-fg-color); margin-top: 1.3em; }
+.md-header__topic { font-weight: 600; font-size: 1.05rem; }
+.md-nav { font-size: .85rem; }
+.md-content { max-width: 52rem; }
+
+/* ---------- Startseite ---------- */
+.startseite-kopf {
+  margin: .5rem 0 1rem;
+  padding: 2rem 1.75rem 1.75rem;
+  border-radius: calc(var(--karte-radius) + 6px);
+  background:
+    radial-gradient(circle at 92% 18%, rgba(255, 255, 255, .18) 0 3.2rem, transparent 3.25rem),
+    radial-gradient(circle at 80% 105%, rgba(255, 255, 255, .1) 0 5rem, transparent 5.05rem),
+    linear-gradient(135deg, var(--md-primary-fg-color), var(--md-accent-fg-color));
+  color: #fffaf3;
+}
+.md-typeset .startseite-kopf h1 { color: inherit; margin: 0 0 .3em; font-size: 2.6rem; }
+.md-typeset .startseite-kopf p { margin: 0; font-size: 1.1rem; max-width: 32em; opacity: .95; }
+.md-typeset .rezept-zaehler { color: var(--md-default-fg-color--light); font-size: .9rem; margin: 0 0 .5rem .2rem; }
+.md-typeset .kategorie-titel { display: flex; align-items: center; gap: .45em; margin: 1.6em 0 .7em; }
+
+.rezept-karten {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15.5rem, 1fr));
+  gap: 1rem;
+}
+.md-typeset a.rezept-karte {
+  display: flex; flex-direction: column; gap: .35rem;
+  padding: 1.15rem 1.2rem 1.1rem;
+  border-radius: var(--karte-radius);
+  background: var(--karte-bg);
+  border: 1px solid var(--karte-rand);
+  box-shadow: var(--schatten);
+  color: var(--md-default-fg-color);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.md-typeset a.rezept-karte:hover, .md-typeset a.rezept-karte:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: var(--schatten-hover);
+  border-color: var(--md-primary-fg-color--light);
+  color: var(--md-default-fg-color);
+}
+.rezept-karte__emoji {
+  display: grid; place-items: center;
+  width: 2.8rem; height: 2.8rem; font-size: 1.55rem;
+  border-radius: 14px; background: var(--kachel-bg); margin-bottom: .25rem;
+}
+.rezept-karte__titel { font-family: var(--ueberschrift-font); font-size: 1.3rem; font-weight: 600; line-height: 1.25; }
+.rezept-karte__text { font-size: .92rem; line-height: 1.5; color: var(--md-default-fg-color--light); flex: 1; }
+.rezept-karte__chips { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .5rem; }
+.rezept-karte__chips span {
+  font-size: .78rem; font-weight: 600; padding: .2em .65em;
+  border-radius: 99px; background: var(--chip-bg); color: var(--chip-fg);
+}
+
+.menues {
+  margin-top: 2.2rem; padding: .3rem 1.4rem 1rem;
+  border-radius: var(--karte-radius);
+  border: 1px dashed var(--karte-rand);
+  background: var(--box-bg);
+}
+.md-typeset .menues h2 { margin-top: .9em; font-size: 1.35rem; }
+
+/* ---------- Rezeptseite: Infokacheln ---------- */
+.rezept-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(6.4rem, 1fr));
+  gap: .6rem;
+  margin: 1.4rem 0 1.2rem;
+}
+.info-kachel {
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  padding: .8rem .5rem .7rem;
+  border-radius: 14px; background: var(--kachel-bg);
+}
+.info-kachel__icon { font-size: 1.3rem; line-height: 1; margin-bottom: .35rem; }
+.info-kachel__wert { font-weight: 700; font-size: 1rem; line-height: 1.3; }
+.info-kachel__name { font-size: .75rem; text-transform: uppercase; letter-spacing: .06em; color: var(--md-default-fg-color--light); margin-top: .15rem; }
+
+/* ---------- Zutaten: zum Abhaken antippen ---------- */
+.zutaten, .schritte {
+  margin: 1.8rem 0;
+  padding: .2rem 1.5rem 1rem;
+  border-radius: var(--karte-radius);
+  background: var(--karte-bg);
+  border: 1px solid var(--karte-rand);
+  box-shadow: var(--schatten);
+}
+.md-typeset .zutaten h2, .md-typeset .schritte h2 { margin-top: .9em; }
+.md-typeset .zutaten h3 { margin-top: 1.1em; font-size: 1.05rem; text-transform: uppercase; letter-spacing: .05em; font-family: var(--md-text-font-family); font-weight: 700; }
+.md-typeset .zutaten ul { list-style: none; margin-left: 0; padding: 0; }
+.md-typeset .zutaten ul li {
+  position: relative; margin: 0; padding: .55em .4em .55em 2.3em;
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+  cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent;
+  transition: color .15s, opacity .15s;
+}
+.md-typeset .zutaten ul li:last-child { border-bottom: 0; }
+.md-typeset .zutaten ul li::before {
+  content: ""; position: absolute; left: .3em; top: .78em;
+  width: 1.15em; height: 1.15em; border-radius: 50%;
+  border: 2px solid var(--md-primary-fg-color--light);
+  transition: background .15s, border-color .15s;
+}
+.md-typeset .zutaten ul li.erledigt { opacity: .45; text-decoration: line-through; }
+.md-typeset .zutaten ul li.erledigt::before {
+  background: var(--md-primary-fg-color) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/80% no-repeat;
   border-color: var(--md-primary-fg-color);
 }
+.zutaten-hinweis { font-size: .8rem; color: var(--md-default-fg-color--light); margin: -.3rem 0 .4rem; }
+
+/* ---------- Zubereitung: große Schrittnummern ---------- */
+.md-typeset .schritte ol { list-style: none; counter-reset: schritt; margin-left: 0; padding: 0; }
+.md-typeset .schritte ol li {
+  counter-increment: schritt; position: relative;
+  margin: 0; padding: .9em .4em .9em 3.4em;
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+  cursor: pointer; -webkit-tap-highlight-color: transparent;
+  transition: opacity .15s, background .15s; border-radius: 10px;
+}
+.md-typeset .schritte ol li:last-child { border-bottom: 0; }
+.md-typeset .schritte ol li::before {
+  content: counter(schritt); position: absolute; left: .2em; top: .75em;
+  width: 2.2em; height: 2.2em; display: grid; place-items: center;
+  border-radius: 50%; font-weight: 700; font-size: .95em;
+  background: var(--md-primary-fg-color); color: var(--md-primary-bg-color);
+}
+.md-typeset .schritte ol li.erledigt { opacity: .4; }
+.md-typeset .schritte ol li.erledigt::before { content: "✓"; background: var(--md-default-fg-color--lighter); }
+.md-typeset .schritte ol li.aktuell { background: var(--kachel-bg); }
+
+/* ---------- übrige Listen & Tabellen ---------- */
+.md-typeset ul li, .md-typeset ol li { margin-bottom: .45em; }
+.md-typeset table:not([class]) { font-size: .95rem; border-radius: 12px; overflow: hidden; }
+.md-typeset table:not([class]) th { background: var(--kachel-bg); }
+
+/* ---------- Bildschirm-wach-Schalter ---------- */
+.wach-schalter {
+  display: inline-flex; align-items: center; gap: .5em;
+  font: 600 .85rem var(--md-text-font-family);
+  padding: .55em 1.1em; margin: 0 0 .4rem;
+  border: 1.5px solid var(--md-primary-fg-color--light); border-radius: 99px;
+  background: transparent; color: var(--md-primary-fg-color); cursor: pointer;
+}
+.wach-schalter[aria-pressed="true"] { background: var(--md-primary-fg-color); color: var(--md-primary-bg-color); border-color: var(--md-primary-fg-color); }
+
+@media screen and (max-width: 44.9375em) {
+  .md-typeset h1 { font-size: 2rem; }
+  .md-typeset .startseite-kopf h1 { font-size: 2.1rem; }
+  .startseite-kopf { padding: 1.5rem 1.25rem; }
+  .zutaten, .schritte { padding: .2rem 1rem .8rem; }
+}
 @media print {
-  .wach-schalter { display: none; }
+  .wach-schalter, .zutaten-hinweis { display: none; }
+  .zutaten, .schritte { box-shadow: none; }
 }
