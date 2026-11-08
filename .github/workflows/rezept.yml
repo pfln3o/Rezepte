@@ -1,0 +1,103 @@
+name: Rezept aus Formular
+
+# Aus einem „Rezept eintragen“-Issue wird automatisch eine Rezeptdatei.
+# 1. Beim Eintragen/Bearbeiten: Vorschau als Kommentar.
+# 2. Freigabe: Label „freigegeben“ setzen (nur Repo-Besitzer können das).
+#    Wer ohne Freigabe veröffentlichen will: Repo-Variable SOFORT_ONLINE = true.
+
+on:
+  issues:
+    types: [opened, edited, labeled]
+
+permissions:
+  contents: write
+  issues: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: rezept-${{ github.event.issue.number }}
+  cancel-in-progress: false
+
+jobs:
+  pruefen:
+    if: >-
+      github.event.issue.state == 'open' &&
+      contains(github.event.issue.labels.*.name, 'rezept') &&
+      (github.event.action == 'opened' || github.event.action == 'edited') &&
+      vars.SOFORT_ONLINE != 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - id: rezept
+        run: python scripts/rezept_aus_issue.py pruefen "$GITHUB_EVENT_PATH" "$RUNNER_TEMP"
+      - name: Vorschau kommentieren
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NR: ${{ github.event.issue.number }}
+        run: |
+          gh issue comment "$NR" --repo "$GITHUB_REPOSITORY" --body-file "$RUNNER_TEMP/kommentar.md" --edit-last \
+            || gh issue comment "$NR" --repo "$GITHUB_REPOSITORY" --body-file "$RUNNER_TEMP/kommentar.md"
+
+  anlegen:
+    if: >-
+      github.event.issue.state == 'open' &&
+      contains(github.event.issue.labels.*.name, 'rezept') &&
+      ((github.event.action == 'labeled' && github.event.label.name == 'freigegeben') ||
+       (github.event.action == 'opened' && vars.SOFORT_ONLINE == 'true'))
+    runs-on: ubuntu-latest
+    outputs:
+      ok: ${{ steps.rezept.outputs.ok }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pillow
+      - id: rezept
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python scripts/rezept_aus_issue.py anlegen "$GITHUB_EVENT_PATH" "$RUNNER_TEMP"
+      - name: Fehlende Angaben melden
+        if: steps.rezept.outputs.ok != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NR: ${{ github.event.issue.number }}
+        run: |
+          gh issue comment "$NR" --repo "$GITHUB_REPOSITORY" --body-file "$RUNNER_TEMP/kommentar.md"
+          gh issue edit "$NR" --repo "$GITHUB_REPOSITORY" --remove-label freigegeben || true
+      - name: Rezept speichern
+        if: steps.rezept.outputs.ok == 'true'
+        env:
+          TITEL: ${{ steps.rezept.outputs.titel }}
+          NR: ${{ github.event.issue.number }}
+        run: |
+          git config user.name "Rezept-Bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add rezepte
+          git commit -m "Neues Rezept: $TITEL (#$NR)"
+          git push origin HEAD:main
+      - name: Bescheid geben und Eintrag schließen
+        if: steps.rezept.outputs.ok == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NR: ${{ github.event.issue.number }}
+          PFAD: ${{ steps.rezept.outputs.pfad }}
+          FOTO: ${{ steps.rezept.outputs.foto }}
+        run: |
+          seite="https://${GITHUB_REPOSITORY_OWNER,,}.github.io/${GITHUB_REPOSITORY#*/}/${PFAD%.md}/"
+          hinweis=""
+          [ "$FOTO" = "fehler" ] && hinweis=" Das Foto ließ sich leider nicht übernehmen."
+          gh issue comment "$NR" --repo "$GITHUB_REPOSITORY" \
+            --body "Das Rezept ist angelegt und in ein, zwei Minuten online: $seite$hinweis"
+          gh issue close "$NR" --repo "$GITHUB_REPOSITORY" --reason completed
+
+  veroeffentlichen:
+    needs: anlegen
+    if: needs.anlegen.outputs.ok == 'true'
+    uses: ./.github/workflows/website.yml

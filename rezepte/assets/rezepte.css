@@ -138,6 +138,15 @@
 .info-kachel__wert { font-weight: 700; font-size: 1.05rem; line-height: 1.3; }
 .info-kachel__name { font-size: .75rem; text-transform: uppercase; letter-spacing: .06em; color: var(--md-default-fg-color--light); margin-top: .15rem; }
 
+.md-typeset .startseite-kopf a.eintragen-knopf {
+  display: inline-block; margin-top: 1.1rem; padding: .6em 1.3em;
+  border-radius: 99px; background: #fffaf3; color: var(--md-primary-fg-color--dark);
+  font-weight: 700; font-size: .95rem; box-shadow: 0 2px 10px rgba(0,0,0,.12);
+  transition: transform .15s ease;
+}
+.md-typeset .startseite-kopf a.eintragen-knopf::before { content: "+ "; }
+.md-typeset .startseite-kopf a.eintragen-knopf:hover { transform: translateY(-2px); color: var(--md-primary-fg-color--dark); }
+
 /* ---------- Rezeptfoto ---------- */
 .md-typeset .rezept-foto { margin: .4rem 0 1.4rem; width: 100%; max-width: none; display: block; }
 .md-typeset .rezept-foto img {

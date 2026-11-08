@@ -1,0 +1,134 @@
+name: Rezept eintragen
+description: Ein neues Gericht für die Rezeptsammlung vorschlagen
+title: "Rezept: "
+labels: ["rezept"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Danke fürs Teilen! Füll einfach aus, was du weißt. Aus deinem Eintrag wird automatisch eine Rezeptseite gebaut.
+        Sobald das Rezept freigegeben ist, erscheint es auf der Website.
+
+  - type: input
+    id: titel
+    attributes:
+      label: Name des Gerichts
+      placeholder: z. B. Kartoffelsuppe
+    validations:
+      required: true
+
+  - type: dropdown
+    id: kategorie
+    attributes:
+      label: Kategorie
+      options:
+        - Hauptgerichte
+        - Beilagen
+        - Suppen
+        - Salate
+        - Soßen
+        - Desserts
+        - Backen
+        - Getränke
+    validations:
+      required: true
+
+  - type: textarea
+    id: beschreibung
+    attributes:
+      label: Kurzbeschreibung
+      description: Ein, zwei Sätze, was das Gericht ausmacht.
+      placeholder: Cremige Kartoffelsuppe mit Majoran und knusprigen Speckwürfeln.
+    validations:
+      required: true
+
+  - type: input
+    id: portionen
+    attributes:
+      label: Portionen
+      placeholder: "4"
+    validations:
+      required: true
+
+  - type: input
+    id: vorbereitung
+    attributes:
+      label: Vorbereitungszeit
+      placeholder: 20 min
+
+  - type: input
+    id: garzeit
+    attributes:
+      label: Koch-, Back- oder Garzeit
+      placeholder: 30 min
+
+  - type: input
+    id: gesamt
+    attributes:
+      label: Gesamtzeit
+      placeholder: 50 min
+    validations:
+      required: true
+
+  - type: dropdown
+    id: schwierigkeit
+    attributes:
+      label: Schwierigkeit
+      options:
+        - einfach
+        - mittel
+        - anspruchsvoll
+    validations:
+      required: true
+
+  - type: textarea
+    id: zutaten
+    attributes:
+      label: Zutaten
+      description: |
+        Eine Zutat pro Zeile. Für Gruppen eine Zeile mit Doppelpunkt am Ende schreiben, z. B. „Für die Soße:“.
+      placeholder: |
+        1 kg mehligkochende Kartoffeln
+        1 Zwiebel
+        1 l Gemüsebrühe
+        Zum Servieren:
+        100 g Speckwürfel
+    validations:
+      required: true
+
+  - type: textarea
+    id: zubereitung
+    attributes:
+      label: Zubereitung
+      description: Ein Schritt pro Zeile, die Nummern kommen automatisch.
+      placeholder: |
+        Kartoffeln schälen und würfeln, Zwiebel hacken.
+        Zwiebel in Butter glasig dünsten, Kartoffeln zugeben.
+        Mit Brühe auffüllen und 20 Minuten köcheln lassen.
+    validations:
+      required: true
+
+  - type: textarea
+    id: tipps
+    attributes:
+      label: Tipps & Varianten (optional)
+      description: Eine Idee pro Zeile.
+
+  - type: input
+    id: passt_zu
+    attributes:
+      label: Passt gut zu (optional)
+      description: Mit Komma trennen.
+      placeholder: Brot, Würstchen
+
+  - type: input
+    id: quelle
+    attributes:
+      label: Woher stammt das Rezept? (optional)
+      placeholder: Omas Kochbuch, eigene Idee …
+
+  - type: textarea
+    id: foto
+    attributes:
+      label: Foto (optional)
+      description: Ein eigenes Foto des Gerichts einfach hier hineinziehen oder einfügen.
