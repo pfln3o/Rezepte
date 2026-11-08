@@ -1,7 +1,7 @@
 ---
 titel: Kaiserschmarrn
 kategorie: mehlspeisen
-portionen: 2–3 als Hauptgericht, 4 als Dessert
+portionen: 2–3 (als Dessert 4)
 vorbereitung: 15 min
 garzeit: 15 min
 gesamt: 30 min

@@ -103,7 +103,10 @@ def _startseite(markdown, config):
             if not _leer(meta.get("gesamt")):
                 chips.append(html.escape(str(meta["gesamt"])))
             if not _leer(meta.get("portionen")):
-                chips.append(html.escape(re.sub(r"\s*\(.*\)", "", str(meta["portionen"]))) + " Portionen")
+                portionen = re.split(r"\s*[(,]", str(meta["portionen"]))[0].strip()
+                if re.fullmatch(r"[\d–\-\s]+", portionen):
+                    portionen += " Portionen"
+                chips.append(html.escape(portionen))
             if not _leer(meta.get("schwierigkeit")):
                 chips.append(html.escape(str(meta["schwierigkeit"])).capitalize())
             chip_html = "".join(f"<span>{c}</span>" for c in chips)
