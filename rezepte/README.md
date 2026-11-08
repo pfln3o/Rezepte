@@ -25,6 +25,8 @@ rezepte/
 |---|---|---|---|
 | [Rinderbraten (Schmorbraten)](hauptgerichte/rinderbraten.md) | 4–6 | ca. 3 h 30 min | mittel |
 | [Rindergulasch](hauptgerichte/gulasch.md) | 4–6 | ca. 3 h | einfach |
+| [Tagliatelle mit Lachs-Sahne-Soße](hauptgerichte/tagliatelle-lachs-sahne.md) | 4 | ca. 25 min | einfach |
+| [Tortellini mit Käse-Sahne-Soße und Schinken](hauptgerichte/tortellini-kaese-sahne-schinken.md) | 4 | ca. 25 min | einfach |
 
 ### Beilagen
 
