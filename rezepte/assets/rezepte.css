@@ -1,0 +1,31 @@
+/* Große, ruhige Schrift für das Lesen am Tablet in der Küche */
+.md-typeset { font-size: 1.05rem; line-height: 1.7; }
+.md-typeset h1 { font-size: 2.1rem; font-weight: 600; }
+.md-typeset h2 { font-size: 1.55rem; margin-top: 1.8em; }
+.md-typeset h3 { font-size: 1.25rem; }
+.md-nav { font-size: 0.85rem; }
+.md-nav__link { padding: 0.25em 0; }
+
+/* Zutaten und Schritte gut auseinanderhalten */
+.md-typeset ul li, .md-typeset ol li { margin-bottom: 0.55em; }
+.md-typeset ol li::marker { font-weight: 700; color: var(--md-primary-fg-color); }
+
+/* Tabellen über die volle Breite, ohne winzige Schrift */
+.md-typeset table:not([class]) { font-size: 0.95rem; display: table; width: 100%; }
+.md-typeset table:not([class]) th,
+.md-typeset table:not([class]) td { padding: 0.7em 0.9em; }
+
+/* Bildschirm-wach-Schalter */
+.wach-schalter {
+  display: inline-flex; align-items: center; gap: .5em;
+  font-size: .8rem; padding: .45em .9em; margin: 0 0 1em;
+  border: 1px solid var(--md-default-fg-color--lighter); border-radius: 2em;
+  background: transparent; color: var(--md-default-fg-color); cursor: pointer;
+}
+.wach-schalter[aria-pressed="true"] {
+  background: var(--md-primary-fg-color); color: var(--md-primary-bg-color);
+  border-color: var(--md-primary-fg-color);
+}
+@media print {
+  .wach-schalter { display: none; }
+}

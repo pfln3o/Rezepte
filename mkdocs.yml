@@ -1,0 +1,55 @@
+site_name: Rezeptsammlung
+site_description: Unsere Familienrezepte
+docs_dir: rezepte
+site_dir: site
+use_directory_urls: true
+exclude_docs: |
+  _vorlage.md
+  README.md
+
+hooks:
+  - hooks/startseite.py
+
+theme:
+  name: material
+  language: de
+  custom_dir: overrides
+  favicon: assets/icon.svg
+  logo: assets/icon.svg
+  font: false            # Systemschrift: schnell und offline
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: deep orange
+      accent: amber
+      toggle:
+        icon: material/weather-night
+        name: Dunkles Design
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: deep orange
+      accent: amber
+      toggle:
+        icon: material/weather-sunny
+        name: Helles Design
+  features:
+    - navigation.sections
+    - navigation.expand
+    - navigation.indexes
+    - navigation.top
+    - toc.follow
+    - search.highlight
+
+plugins:
+  - search:
+      lang: de
+
+markdown_extensions:
+  - tables
+  - toc:
+      permalink: false
+  - attr_list
+  - admonition
+
+extra_css:
+  - assets/rezepte.css
