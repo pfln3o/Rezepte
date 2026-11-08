@@ -32,6 +32,12 @@ rezepte/
 |---|---|---|---|
 | [Semmelknödel](beilagen/semmelknoedel.md) | 4 (ca. 8 Stück) | ca. 1 h | einfach |
 
+### Suppen
+
+| Rezept | Portionen | Gesamtzeit | Schwierigkeit |
+|---|---|---|---|
+| [Testrezept (bitte ignorieren)](suppen/testrezept-bitte-ignorieren.md) | 4 | 50 min | einfach |
+
 ## Menüvorschläge
 
 - **Sonntagsbraten:** Rinderbraten + Semmelknödel (+ Rotkohl)
