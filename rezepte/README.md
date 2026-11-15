@@ -52,6 +52,7 @@ rezepte/
 |---|---|---|---|
 | [Kaiserschmarrn](mehlspeisen/kaiserschmarrn.md) | 2–3 (Hauptgericht) | ca. 30 min | mittel |
 | [Pfannkuchen](mehlspeisen/pfannkuchen.md) | 4 (ca. 8 Stück) | ca. 1 h | einfach |
+| [Waffeln aus dem Optigrill](mehlspeisen/waffeln-optigrill.md) | 4–6 (ca. 10–12 Waffeln) | ca. 1 h 15 min | einfach |
 
 ## Menüvorschläge
 
