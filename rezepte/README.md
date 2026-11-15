@@ -33,6 +33,7 @@ rezepte/
 
 | Rezept | Portionen | Gesamtzeit | Schwierigkeit |
 |---|---|---|---|
+| [Kohlrabi-Pommes aus dem Airfryer](beilagen/kohlrabi-pommes-airfryer.md) | 2–3 | ca. 35 min | einfach |
 | [Semmelknödel](beilagen/semmelknoedel.md) | 4 (ca. 8 Stück) | ca. 1 h | einfach |
 
 ### Suppen
@@ -60,4 +61,4 @@ rezepte/
 - **Sonntagsbraten:** Rinderbraten + Semmelknödel (+ Rotkohl)
 - **Deftiger Eintopftag:** Rindergulasch + Semmelknödel oder Spätzle
 - **Österreichisches Sonntagsessen:** Grießnockerlsuppe, dann Rinderbraten + Semmelknödel, zum Nachtisch Kaiserschmarrn
-- **Griechischer Abend:** Gyros mit Tzatziki, Pommes oder Reis und Krautsalat
+- **Griechischer Abend:** Gyros mit Tzatziki, Pommes (oder Kohlrabi-Pommes aus dem Airfryer) oder Reis und Krautsalat
