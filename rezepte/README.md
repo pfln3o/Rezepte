@@ -41,6 +41,7 @@ rezepte/
 | Rezept | Portionen | Gesamtzeit | Schwierigkeit |
 |---|---|---|---|
 | [Grießnockerlsuppe](suppen/griessnockerlsuppe.md) | 4 (ca. 12 Nockerl) | ca. 55 min | einfach |
+| [Kaspressknödel](suppen/kaspressknoedel.md) | 4 (ca. 8 Knödel) | ca. 40 min | einfach |
 
 ### Soßen
 
@@ -62,3 +63,4 @@ rezepte/
 - **Deftiger Eintopftag:** Rindergulasch + Semmelknödel oder Spätzle
 - **Österreichisches Sonntagsessen:** Grießnockerlsuppe, dann Rinderbraten + Semmelknödel, zum Nachtisch Kaiserschmarrn
 - **Griechischer Abend:** Gyros mit Tzatziki, Pommes (oder Kohlrabi-Pommes aus dem Airfryer) oder Reis und Krautsalat
+- **Tiroler Hüttenabend:** Kaspressknödel in Rinderbrühe, danach Kaiserschmarrn
